@@ -3,4 +3,5 @@ build
 target
 *.log
 package-lock.json
+yarn.lock
 Cargo.lock
