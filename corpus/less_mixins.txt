@@ -1,0 +1,226 @@
+============================
+Less: mixins
+============================
+.mixin-id {.a;}
+.mixin-id {.a();}
+.mixin-id {#b;}
+.mixin-id {#b();}
+
+---
+
+============================
+Less: mixins with parentheses
+============================
+.my-other-mixin() {
+  background: white;
+}
+.class {
+  .my-other-mixin();
+}
+---
+
+============================
+Less: selectors in mixins
+============================
+.my-hover-mixin() {
+  &:hover {
+    border: 1px solid red;
+  }
+}
+---
+
+============================
+Less: namespaces
+============================
+#outer() {
+  .inner {
+    color: red;
+  }
+}
+
+.c {
+  #outer.inner();
+  #outer > .inner();
+  #outer .inner();
+}
+---
+
+============================
+Less: guarded namespaces
+============================
+#namespace when (@mode = huge) {
+  .mixin() { }
+}
+
+#namespace {
+  .mixin() when (@mode = huge) { }
+}
+---
+
+============================
+Less: the !important keyword
+============================
+.important {
+  .foo() !important;
+}
+---
+
+============================
+Less: parametric mixins
+============================
+.border-radius(@radius) {
+          border-radius: @radius;
+}
+#header {
+  .border-radius(4px);
+}
+.border-radius(@radius: 5px) {
+          border-radius: @radius;
+}
+---
+
+============================
+Less: parameter separators
+============================
+#el {
+  .name(1, 2, 3; something, else)
+}
+#el {
+  .name(1, 2, 3)
+}
+#el {
+  .name(1, 2, 3;)
+}
+#el {
+  .name(@param1: red, blue;)
+}
+#el {
+  .name(@param1: ~(red, blue))
+}
+
+---
+
+============================
+Less: named parameters
+============================
+.mixin(@color: black; @margin: 10px; @padding: 20px) {
+  color: @color;
+  margin: @margin;
+  padding: @padding;
+}
+.class1 {
+  .mixin(@margin: 20px; @color: #33acfe);
+}
+.class2 {
+  .mixin(#efca44; @padding: 40px);
+}
+
+---
+
+============================
+less: the @arguments variable
+============================
+.box-shadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  box-shadow: @arguments;
+}
+---
+
+============================
+.mixin(...) {}
+.mixin() {}
+.mixin(@a: 1) {}
+.mixin(@a: 1, ...) {}
+.mixin(@a, ...) {}
+
+============================
+---
+
+============================
+Less: pattern matching
+============================
+.mixin(dark, @color) {}
+.mixin(light, @color) {}
+.mixin(@_, @color) {}
+
+---
+
+============================
+Less: using mixins as functions
+============================
+.average(@x, @y) {
+  @result: ((@x + @y) / 2);
+}
+
+div {
+  padding: .average(16px, 50px)[@result];
+}
+---
+
+============================
+Less: unnamed lookups
+============================
+div {
+  padding: .average(16px, 50px)[];
+  my-value: @dr[];
+}
+---
+
+============================
+Less: recursive mixins
+============================
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .column-@{i} {
+    width: (@i * 100% / @n);
+  }
+  .generate-columns(@n, (@i + 1));
+}
+---
+
+============================
+Less: mixin guards
+============================
+.mixin(@a) when (lightness(@a) >= 50%) {
+  background-color: black;
+}
+---
+
+
+============================
+Less: guard comparison operators
+============================
+.truth(@a) when (@a < @b) {}
+.truth(@a) when (@a <= @b) {}
+.truth(@a) when (@a = @b) {}
+.truth(@a) when (@a > @b) {}
+.truth(@a) when (@a >= @b) {}
+---
+
+
+============================
+Less: guard logical operators
+============================
+.mixin(@a) when (isnumber(@a)) and (@a > 0) { }
+.mixin(@a) when (@a > 10), (@a < -10) { }
+.mixin(@b) when not (@b > 0) { }
+
+---
+
+
+============================
+Less: type checking functions
+============================
+.mixin(@a; @b: 0) when (isnumber(@b)) { }
+.mixin(@a; @b: black) when (iscolor(@b)) { }
+---
+
+
+============================
+Less: aliasing mixins
+============================
+.navbar {
+  @colors: #theme.dark.navbar.colors(dark);
+  background: @colors[primary];
+}
+
+---
+

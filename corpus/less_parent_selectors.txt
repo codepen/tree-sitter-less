@@ -1,0 +1,54 @@
+==============================
+Less: parent selectors
+==============================
+a {
+  color: blue;
+  &:hover {
+    color: green;
+  }
+}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))
+
+==============================
+Less: multiple &
+==============================
+.link {
+  & + & {
+    color: red;
+  }
+
+  & & {
+    color: green;
+  }
+
+  && {
+    color: blue;
+  }
+
+  &, &ish {
+    color: cyan;
+  }
+}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))
+
+==============================
+Less: changing selector order
+==============================
+.header {
+  .menu {
+    border-radius: 5px;
+    .no-borderradius & {
+      background-image: url('images/button-background.png');
+    }
+  }
+}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))

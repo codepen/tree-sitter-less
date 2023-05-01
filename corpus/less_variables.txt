@@ -1,0 +1,75 @@
+============================
+Tests taken from https://lesscss.org/features/#variables-feature-overview
+============================
+
+============================
+Less: variables
+============================
+@link-color:        #428bca;
+.link {
+  color: @link-color;
+}
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+============================
+Less: variable interpolation
+============================
+@primary:  green;
+
+.section {
+  @color: primary;
+
+  .element {
+    color: @@color;
+  }
+}
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+============================
+Less: plugin statements
+============================
+@plugin "@{themes}/tidal-wave.less";
+@plugin (optional, reference) "foo.less"
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+============================
+Less: import statements
+============================
+@import "@{themes}/tidal-wave.less";
+@import (optional, reference) "foo.less"
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+============================
+Less: variable variables
+============================
+@import "@{themes}/tidal-wave.less";
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+============================
+Less: properties as variables
+============================
+.widget {
+  color: #efefef;
+  background-color: $color;
+}
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
+

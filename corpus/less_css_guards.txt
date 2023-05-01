@@ -1,0 +1,22 @@
+w============================
+Less: css guards
+============================
+button when (@my-option = true) {
+  color: white;
+}
+---
+
+
+============================
+Less: if guard
+============================
+@dr: if(@my-option = true, {
+  button {
+    color: white;
+  }
+  a {
+    color: blue;
+  }
+});
+@dr();
+---

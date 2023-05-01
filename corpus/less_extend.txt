@@ -1,0 +1,83 @@
+==============================
+Less: extend
+==============================
+.a:extend(.b) {}
+.a {
+  &:extend(.b);
+}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))
+
+==============================
+Less: extend attached to selector
+==============================
+.big-bag:extend(.bag),
+.big-bucket:extend(.bucket) {}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))
+
+==============================
+Less: extend inside ruleset
+==============================
+.big-bag:extend(.bag),
+.big-bucket:extend(.bucket) {}
+---
+(stylesheet
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (comment))))
+
+============================
+Less: extending nested selectors
+============================
+.some-class:extend(.bucket tr) {}
+---
+
+============================
+Less: exact matching with extend
+============================
+.selector:extend(link:visited:hover) {}
+---
+
+============================
+Less: nth expression
+============================
+.child:extend(:nth-child(n+3)) {}
+.noQuote:extend([title=identifier]) {}
+.singleQuote:extend([title='identifier']) {}
+.doubleQuote:extend([title="identifier"]) {}
+---
+
+============================
+Less: extend "all"
+============================
+.replacement:extend(.test all) {}
+---
+
+============================
+Less: selector interpolation with extend
+============================
+.some-class:extend(.bucket) {}
+.some-class:extend(@{variable}) {}
+@{variable}:extend(.bucket) {}
+---
+
+============================
+Less: scoping / extend inside @media
+============================
+@media print {
+  .screenClass:extend(.selector) {}
+}
+
+---
+
+============================
+Less: use cases for extend
+============================
+.bear {
+  &:extend(.animal);
+}
+---
