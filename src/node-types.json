@@ -1792,6 +1792,10 @@
     "named": false
   },
   {
+    "type": "single_line_comment",
+    "named": true
+  },
+  {
     "type": "string_value",
     "named": true
   },
