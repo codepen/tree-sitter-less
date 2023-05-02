@@ -1,15 +1,14 @@
 ============================
-Less: mixins
+Less:mixins:
 ============================
 .mixin-id {.a;}
 .mixin-id {.a();}
 .mixin-id {#b;}
 .mixin-id {#b();}
-
 ---
 
 ============================
-Less: mixins with parentheses
+Less:mixins:with parentheses
 ============================
 .my-other-mixin() {
   background: white;
@@ -20,7 +19,7 @@ Less: mixins with parentheses
 ---
 
 ============================
-Less: selectors in mixins
+Less:mixins:selectors in mixins
 ============================
 .my-hover-mixin() {
   &:hover {
@@ -30,7 +29,7 @@ Less: selectors in mixins
 ---
 
 ============================
-Less: namespaces
+Less:mixins:namespaces
 ============================
 #outer() {
   .inner {
@@ -46,7 +45,7 @@ Less: namespaces
 ---
 
 ============================
-Less: guarded namespaces
+Less:mixins:guarded namespaces
 ============================
 #namespace when (@mode = huge) {
   .mixin() { }
@@ -58,7 +57,7 @@ Less: guarded namespaces
 ---
 
 ============================
-Less: the !important keyword
+Less:mixins:the !important keyword
 ============================
 .important {
   .foo() !important;
@@ -66,7 +65,7 @@ Less: the !important keyword
 ---
 
 ============================
-Less: parametric mixins
+Less:mixins:parametric mixins
 ============================
 .border-radius(@radius) {
           border-radius: @radius;
@@ -80,7 +79,7 @@ Less: parametric mixins
 ---
 
 ============================
-Less: parameter separators
+Less:mixins:parameter separators
 ============================
 #el {
   .name(1, 2, 3; something, else)
@@ -101,7 +100,7 @@ Less: parameter separators
 ---
 
 ============================
-Less: named parameters
+Less:mixins:named parameters
 ============================
 .mixin(@color: black; @margin: 10px; @padding: 20px) {
   color: @color;
@@ -118,7 +117,7 @@ Less: named parameters
 ---
 
 ============================
-less: the @arguments variable
+Less:mixins:the @arguments variable
 ============================
 .box-shadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
   box-shadow: @arguments;
@@ -136,7 +135,7 @@ less: the @arguments variable
 ---
 
 ============================
-Less: pattern matching
+Less:mixins:pattern matching
 ============================
 .mixin(dark, @color) {}
 .mixin(light, @color) {}
@@ -145,7 +144,7 @@ Less: pattern matching
 ---
 
 ============================
-Less: using mixins as functions
+Less:mixins:using mixins as functions
 ============================
 .average(@x, @y) {
   @result: ((@x + @y) / 2);
@@ -157,7 +156,7 @@ div {
 ---
 
 ============================
-Less: unnamed lookups
+Less:mixins:unnamed lookups
 ============================
 div {
   padding: .average(16px, 50px)[];
@@ -166,7 +165,7 @@ div {
 ---
 
 ============================
-Less: recursive mixins
+Less:mixins:recursive mixins
 ============================
 .generate-columns(@n, @i: 1) when (@i =< @n) {
   .column-@{i} {
@@ -177,7 +176,7 @@ Less: recursive mixins
 ---
 
 ============================
-Less: mixin guards
+Less:mixins:mixin guards
 ============================
 .mixin(@a) when (lightness(@a) >= 50%) {
   background-color: black;
@@ -186,7 +185,7 @@ Less: mixin guards
 
 
 ============================
-Less: guard comparison operators
+Less:mixins:guard comparison operators
 ============================
 .truth(@a) when (@a < @b) {}
 .truth(@a) when (@a <= @b) {}
@@ -197,7 +196,7 @@ Less: guard comparison operators
 
 
 ============================
-Less: guard logical operators
+Less:mixins:guard logical operators
 ============================
 .mixin(@a) when (isnumber(@a)) and (@a > 0) { }
 .mixin(@a) when (@a > 10), (@a < -10) { }
@@ -207,7 +206,7 @@ Less: guard logical operators
 
 
 ============================
-Less: type checking functions
+Less:mixins:type checking functions
 ============================
 .mixin(@a; @b: 0) when (isnumber(@b)) { }
 .mixin(@a; @b: black) when (iscolor(@b)) { }
@@ -215,7 +214,7 @@ Less: type checking functions
 
 
 ============================
-Less: aliasing mixins
+Less:mixins:aliasing mixins
 ============================
 .navbar {
   @colors: #theme.dark.navbar.colors(dark);

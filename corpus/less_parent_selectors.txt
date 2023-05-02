@@ -1,5 +1,5 @@
 ==============================
-Less: parent selectors
+Less:parent_selectors:basic
 ==============================
 a {
   color: blue;
@@ -8,12 +8,9 @@ a {
   }
 }
 ---
-(stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (comment))))
 
 ==============================
-Less: multiple &
+Less:parent_selectors:multiple &
 ==============================
 .link {
   & + & {
@@ -33,12 +30,9 @@ Less: multiple &
   }
 }
 ---
-(stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (comment))))
 
 ==============================
-Less: changing selector order
+Less:parent_selectors:changing selector order
 ==============================
 .header {
   .menu {
@@ -49,6 +43,3 @@ Less: changing selector order
   }
 }
 ---
-(stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (comment))))

@@ -1,6 +1,5 @@
 module.exports = grammar({
-  // TODO: Changing name to "less" breaks tests(!)  Why?!?
-  name: 'css',
+  name: 'scss',
 
   extras: $ => [/\s/, $.comment, $.single_line_comment],
 
@@ -23,7 +22,21 @@ module.exports = grammar({
         $.namespace_statement,
         $.keyframes_statement,
         $.supports_statement,
-        $.at_rule
+        $.use_statement,
+        $.forward_statement,
+        $.apply_statement,
+        $.mixin_statement,
+        $.include_statement,
+        $.if_statement,
+        $.each_statement,
+        $.for_statement,
+        $.while_statement,
+        $.function_statement,
+        $.error_statement,
+        $.warn_statement,
+        $.debug_statement,
+        $.at_rule,
+        $.placeholder
       ),
 
     // Statements
@@ -60,6 +73,105 @@ module.exports = grammar({
 
     at_rule: $ => seq($.at_keyword, sep(',', $._query), choice(';', $.block)),
 
+    use_statement: $ => seq('@use', $._value, ';'),
+
+    forward_statement: $ => seq('@forward', $._value, ';'),
+
+    apply_statement: $ => seq('@apply', repeat($._value), ';'),
+
+    parameters: $ => seq('(', sep1(',', $.parameter), ')'),
+
+    parameter: $ =>
+      seq(
+        alias($.variable_identifier, $.variable_name),
+        optional(seq(':', alias($._value, $.default_value)))
+      ),
+
+    mixin_statement: $ =>
+      seq(
+        '@mixin',
+        alias($.identifier, $.name),
+        optional($.parameters),
+        $.block
+      ),
+
+    include_statement: $ =>
+      seq(
+        '@include',
+        $.identifier,
+        optional(alias($.include_arguments, $.arguments)),
+        choice($.block, ';')
+      ),
+
+    include_arguments: $ =>
+      seq(
+        token.immediate('('),
+        sep1(',', alias($.include_argument, $.argument)),
+        token.immediate(')')
+      ),
+
+    include_argument: $ =>
+      seq(
+        optional(seq(alias($.variable_identifier, $.argument_name), ':')),
+        alias($._value, $.argument_value)
+      ),
+
+    placeholder: $ => seq('%', alias($.identifier, $.name), $.block),
+
+    extend_statement: $ =>
+      seq('@extend', choice($._value, $.class_selector), ';'),
+
+    if_statement: $ =>
+      seq($.if_clause, repeat($.else_if_clause), optional($.else_clause)),
+
+    if_clause: $ => seq('@if', alias($._value, $.condition), $.block),
+
+    else_if_clause: $ =>
+      seq('@else', 'if', alias($._value, $.condition), $.block),
+
+    else_clause: $ => seq('@else', $.block),
+
+    each_statement: $ =>
+      seq(
+        '@each',
+        optional(seq(alias($.variable_identifier, $.key), ',')),
+        alias($.variable_identifier, $.value),
+        'in',
+        $._value,
+        $.block
+      ),
+
+    for_statement: $ =>
+      seq(
+        '@for',
+        alias($.variable_identifier, $.variable),
+        'from',
+        alias($._value, $.from),
+        'through',
+        alias($._value, $.through),
+        $.block
+      ),
+
+    while_statement: $ => seq('@while', $._value, $.block),
+
+    function_statement: $ =>
+      seq(
+        '@function',
+        alias($.identifier, $.name),
+        optional($.parameters),
+        $.block
+      ),
+
+    return_statement: $ => seq('@return', $._value, ';'),
+
+    at_root_statement: $ => seq('@at-root', $._value, $.block),
+
+    error_statement: $ => seq('@error', $._value, ';'),
+
+    warn_statement: $ => seq('@warn', $._value, ';'),
+
+    debug_statement: $ => seq('@debug', $._value, ';'),
+
     // Rule sets
 
     rule_set: $ => seq($.selectors, $.block),
@@ -84,17 +196,26 @@ module.exports = grammar({
         $.namespace_statement,
         $.keyframes_statement,
         $.supports_statement,
+        $.mixin_statement,
+        $.include_statement,
+        $.extend_statement,
+        $.if_statement,
+        $.each_statement,
+        $.for_statement,
+        $.while_statement,
+        $.function_statement,
+        $.return_statement,
+        $.at_root_statement,
+        $.error_statement,
+        $.warn_statement,
+        $.debug_statement,
         $.at_rule
       ),
 
     // Selectors
 
-    merge_selector: $ => seq($._selector, '()'),
-    merge_attribute: $ => prec(1, seq($.identifier, /\+_?/)),
-
     _selector: $ =>
       choice(
-        $.merge_selector,
         $.universal_selector,
         alias($.identifier, $.tag_name),
         $.class_selector,
@@ -117,7 +238,11 @@ module.exports = grammar({
     class_selector: $ =>
       prec(
         1,
-        seq(optional($._selector), '.', alias($.identifier, $.class_name))
+        seq(
+          optional($._selector),
+          choice('.', $.nesting_selector),
+          alias($.identifier, $.class_name)
+        )
       ),
 
     pseudo_class_selector: $ =>
@@ -164,7 +289,10 @@ module.exports = grammar({
 
     declaration: $ =>
       seq(
-        alias(choice($.identifier, $.merge_attribute), $.property_name),
+        choice(
+          alias($.variable_identifier, $.variable_name),
+          alias($.identifier, $.property_name)
+        ),
         ':',
         $._value,
         repeat(seq(optional(','), $._value)),
@@ -222,6 +350,7 @@ module.exports = grammar({
         -1,
         choice(
           alias($.identifier, $.plain_value),
+          alias($.variable_identifier, $.variable_value),
           $.plain_value,
           $.color_value,
           $.integer_value,
@@ -270,12 +399,21 @@ module.exports = grammar({
       seq(alias($.identifier, $.function_name), $.arguments),
 
     binary_expression: $ =>
-      prec.left(seq($._value, choice('+', '-', '*', '/'), $._value)),
+      prec.left(
+        seq(
+          $._value,
+          choice('+', '-', '*', '/', '==', '<', '>', '!=', '<=', '>='),
+          $._value
+        )
+      ),
 
     arguments: $ =>
       seq(token.immediate('('), sep(choice(',', ';'), repeat1($._value)), ')'),
 
-    identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
+    identifier: $ =>
+      /((#\{[a-zA-Z0-9-_,&\$\.\(\) ]*\})|(--|-?[a-zA-Z_]))([a-zA-Z0-9-_]|(#\{[a-zA-Z0-9-_,&\$\.\(\) ]*\}))*/,
+
+    variable_identifier: $ => /([a-zA-Z_]+\.)?\$[a-zA-Z-_][a-zA-Z0-9-_]*/,
 
     at_keyword: $ => /@[a-zA-Z-_]+/,
 

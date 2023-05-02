@@ -1,5 +1,5 @@
 ==============================
-Less: extend
+Less:extend:basic
 ==============================
 .a:extend(.b) {}
 .a {
@@ -11,7 +11,7 @@ Less: extend
     (comment))))
 
 ==============================
-Less: extend attached to selector
+Less:extend:attached to selector
 ==============================
 .big-bag:extend(.bag),
 .big-bucket:extend(.bucket) {}
@@ -21,7 +21,7 @@ Less: extend attached to selector
     (comment))))
 
 ==============================
-Less: extend inside ruleset
+Less:extend:inside ruleset
 ==============================
 .big-bag:extend(.bag),
 .big-bucket:extend(.bucket) {}
@@ -31,19 +31,19 @@ Less: extend inside ruleset
     (comment))))
 
 ============================
-Less: extending nested selectors
+Less:extend:nested selectors
 ============================
 .some-class:extend(.bucket tr) {}
 ---
 
 ============================
-Less: exact matching with extend
+Less:extend:exact matching with extend
 ============================
 .selector:extend(link:visited:hover) {}
 ---
 
 ============================
-Less: nth expression
+Less:extend:nth expression
 ============================
 .child:extend(:nth-child(n+3)) {}
 .noQuote:extend([title=identifier]) {}
@@ -52,13 +52,13 @@ Less: nth expression
 ---
 
 ============================
-Less: extend "all"
+Less:extend:all
 ============================
 .replacement:extend(.test all) {}
 ---
 
 ============================
-Less: selector interpolation with extend
+Less:extend:selector interpolation with extend
 ============================
 .some-class:extend(.bucket) {}
 .some-class:extend(@{variable}) {}
@@ -66,7 +66,7 @@ Less: selector interpolation with extend
 ---
 
 ============================
-Less: scoping / extend inside @media
+Less:extend:scoping / extend inside @media
 ============================
 @media print {
   .screenClass:extend(.selector) {}
@@ -75,7 +75,7 @@ Less: scoping / extend inside @media
 ---
 
 ============================
-Less: use cases for extend
+Less:extend:use cases for extend
 ============================
 .bear {
   &:extend(.animal);

@@ -475,9 +475,43 @@
         }
       ]
     },
+    "merge_selector": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_selector"
+        },
+        {
+          "type": "STRING",
+          "value": "()"
+        }
+      ]
+    },
+    "merge_attribute": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\+_?"
+          }
+        ]
+      }
+    },
     "_selector": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "merge_selector"
+        },
         {
           "type": "SYMBOL",
           "name": "universal_selector"
@@ -929,8 +963,17 @@
         {
           "type": "ALIAS",
           "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "merge_attribute"
+              }
+            ]
           },
           "named": true,
           "value": "property_name"

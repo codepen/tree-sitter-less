@@ -1,5 +1,5 @@
-w============================
-Less: css guards
+============================
+Less:guards:when
 ============================
 button when (@my-option = true) {
   color: white;
@@ -8,7 +8,7 @@ button when (@my-option = true) {
 
 
 ============================
-Less: if guard
+Less:guards:if
 ============================
 @dr: if(@my-option = true, {
   button {

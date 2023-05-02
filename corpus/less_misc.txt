@@ -1,17 +1,32 @@
+============================
+Less:misc:import statements
+============================
+@import "@{themes}/tidal-wave.less";
+@import (optional, reference) "foo.less"
+---
+(stylesheet
+  (import_statement
+    (string_value)))
+
 ==============================
-Less: comments
+Less:misc:comments
 ==============================
-@keyframes important1 {
-  50%  { margin-top: 150px !important; } /* ignored */
+div {
+  color: blue /* ignored */
 }
 ---
 (stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (comment))))
-
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (plain_value))
+      (comment))))
 
 ==============================
-Less: maps
+Less:misc:maps
 ==============================
 @sizes: {
   mobile: 320px;
@@ -24,4 +39,5 @@ Less: maps
     display: inline-block;
   }
 }
+---
 

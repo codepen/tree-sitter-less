@@ -1,8 +1,7 @@
 module.exports = grammar({
-  // TODO: Changing name to "less" breaks tests(!)  Why?!?
   name: 'css',
 
-  extras: $ => [/\s/, $.comment, $.single_line_comment],
+  extras: $ => [/\s/, $.comment],
 
   externals: $ => [$._descendant_operator],
 
@@ -89,12 +88,8 @@ module.exports = grammar({
 
     // Selectors
 
-    merge_selector: $ => seq($._selector, '()'),
-    merge_attribute: $ => prec(1, seq($.identifier, /\+_?/)),
-
     _selector: $ =>
       choice(
-        $.merge_selector,
         $.universal_selector,
         alias($.identifier, $.tag_name),
         $.class_selector,
@@ -164,7 +159,7 @@ module.exports = grammar({
 
     declaration: $ =>
       seq(
-        alias(choice($.identifier, $.merge_attribute), $.property_name),
+        alias($.identifier, $.property_name),
         ':',
         $._value,
         repeat(seq(optional(','), $._value)),
@@ -280,8 +275,6 @@ module.exports = grammar({
     at_keyword: $ => /@[a-zA-Z-_]+/,
 
     comment: $ => token(seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/')),
-
-    single_line_comment: $ => token(seq('//', /.*/)),
 
     plain_value: $ =>
       token(

@@ -1,15 +1,44 @@
 ============================
-Less: merge
+Less:merge:basic
 ============================
 .mixin() {
-  box-shadow+: inset 0 0 10px #555;
+  box-shadow: inset 0 0 10px #555;
 }
 ---
+(stylesheet
+  (rule_set
+    (selectors
+      (merge_selector
+        (class_selector
+          (class_name))))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)
+        (integer_value)
+        (integer_value)
+        (integer_value
+          (unit))
+        (color_value)))))
 
 ============================
-Less: space
+Less:merge:space
 ============================
 .mixin() {
   transform+_: scale(2);
 }
 ---
+(stylesheet
+  (rule_set
+    (selectors
+      (merge_selector
+        (class_selector
+          (class_name))))
+    (block
+      (declaration
+        (property_name
+          (identifier))
+        (call_expression
+          (function_name)
+          (arguments
+            (integer_value)))))))
