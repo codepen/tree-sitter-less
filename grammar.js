@@ -34,9 +34,11 @@ module.exports = grammar({
         )
       ),
 
-    // /**... */-style comments.  Got the regex here from tree-sitter-css. 'Not
-    // entirely sure why it works, but it does.
+    // `/**... */`-style comments.  Regex is from tree-sitter-css. 'Not entirely
+    // sure why it works, but it does.
     comment_block: $ => token(seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/')),
+
+    // `// ...`-style comments
     comment_line: $ => token(seq('//', /.+/)),
   },
 });
