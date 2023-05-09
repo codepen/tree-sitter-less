@@ -63,7 +63,7 @@ a {
 Imports
 ============================
 
-@import "foo.bar";
+@import "http://foo.bar";
 
 a {
   b: '';

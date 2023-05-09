@@ -1,25 +1,21 @@
+// This is a small, incomplete, and probably buggy grammar for LESS.  The main
+// use here is to extract `import` dependencies from LESS files.
+
 module.exports = grammar({
-  name: 'css',
+  name: 'less',
 
   extras: $ => [/\s/],
 
   rules: {
     doc: $ =>
       repeat(
-        choice(
-          $.import,
-          $.comment_block,
-          $.comment_line,
-          $.import,
-          $.string,
-          $.tbd
-        )
+        choice($.import, $.comment_block, $.comment_line, $.string, $.tbd)
       ),
 
     // Catch-all rule for constructs we don't care about
     tbd: $ => prec(-1, repeat1(/./)),
 
-    // imports
+    // Imports
     import_keyword: $ => seq(/\w+/, optional(',')),
     import_keywords: $ => seq('(', repeat($.import_keyword), ')'),
     import: $ => seq('@import', optional($.import_keywords), $.string, ';'),
