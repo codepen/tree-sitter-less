@@ -1,10 +1,10 @@
 [package]
-name = "tree-sitter-css"
-description = "css grammar for the tree-sitter parsing library"
+name = "tree-sitter-less"
+description = "less grammar for the tree-sitter parsing library"
 version = "0.0.1"
-keywords = ["incremental", "parsing", "css"]
+keywords = ["incremental", "parsing", "less"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-css"
+repository = "https://github.com/tree-sitter/tree-sitter-less"
 edition = "2018"
 license = "MIT"
 

@@ -1,6 +1,8 @@
 {
-  "name": "tree-sitter-css",
-  "version": "0.0.1",
+  "name": "@codepen/tree-sitter-less",
+  "version": "1.0.0",
+  "main": "bindings/node",
+  "license": "UNLICENSED",
   "dependencies": {
     "nan": "^2.14.1"
   },
@@ -9,6 +11,5 @@
   },
   "scripts": {
     "test": "tree-sitter generate && tree-sitter test"
-  },
-  "main": "bindings/node"
+  }
 }
